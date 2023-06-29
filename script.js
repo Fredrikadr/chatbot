@@ -4,6 +4,8 @@ let inputField = document.querySelector("#message-input");
 let chatWindow = document.querySelector(".chat-window");
 let sendButton = document.querySelector("#send-btn")
 
+let messages = []
+
 
 sendButton.addEventListener("click", sendMessage)
 
@@ -13,6 +15,8 @@ function sendMessage() {
   displayMessage("You", message);
 
   inputField.value = "";
+
+  fetchBotResponse(message);
 }
 
 function displayMessage(sender, message) {
@@ -22,5 +26,28 @@ function displayMessage(sender, message) {
   newMessage.innerHTML = `${sender}: ${message}`
 }
 
+async function fetchBotResponse(message) {
+  const headers = {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${apiKey}`
+  };
 
+  const payload = {
+    messages: [],
+    model: "gpt-3.5-turbo",
+    max_tokens: 100,
+    temperature: 0
+  };
 
+  const response = await fetch(apiURL, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(payload)
+  });
+
+  const data = await response.json();
+
+  console.log(data);
+  return data.choices[0].text;
+
+}
