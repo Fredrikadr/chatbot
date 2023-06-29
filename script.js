@@ -4,19 +4,24 @@ let inputField = document.querySelector("#message-input");
 let chatWindow = document.querySelector(".chat-window");
 let sendButton = document.querySelector("#send-btn")
 
-let messages = []
+let conversation = []
 
 
 sendButton.addEventListener("click", sendMessage)
 
 function sendMessage() {
-  let message = inputField.value;
+  let message = {
+    role: "user",
+    content: inputField.value
+  };
 
-  displayMessage("You", message);
+  displayMessage("You", message.content);
 
   inputField.value = "";
 
-  fetchBotResponse(message);
+  conversation.push(message)
+
+  fetchBotResponse();
 }
 
 function displayMessage(sender, message) {
@@ -26,14 +31,14 @@ function displayMessage(sender, message) {
   newMessage.innerHTML = `${sender}: ${message}`
 }
 
-async function fetchBotResponse(message) {
+async function fetchBotResponse() {
   const headers = {
     "Content-Type": "application/json",
     "Authorization": `Bearer ${apiKey}`
   };
 
   const payload = {
-    messages: [],
+    messages: conversation,
     model: "gpt-3.5-turbo",
     max_tokens: 100,
     temperature: 0
@@ -46,8 +51,12 @@ async function fetchBotResponse(message) {
   });
 
   const data = await response.json();
+  const botMessage = data.choices[0].message
 
-  console.log(data);
-  return data.choices[0].text;
+  conversation.push(botMessage);
+  console.log(botMessage)
+  console.log(conversation)
+
+  displayMessage("Bot", botMessage.content)
 
 }
