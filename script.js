@@ -8,8 +8,16 @@ let conversation = []
 
 
 sendButton.addEventListener("click", sendMessage)
+inputField.addEventListener("keydown", (e) => {
+  if (e.keyCode === 13) {
+    sendMessage();
+  } else return;
+})
 
 function sendMessage() {
+  if (!inputField.value) {
+    return;
+  }
   let message = {
     role: "user",
     content: inputField.value
