@@ -51,20 +51,32 @@ async function fetchBotResponse() {
     max_tokens: 100,
     temperature: 0
   };
+  try {
+    const response = await fetch(apiURL, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(payload)
+    });
 
-  const response = await fetch(apiURL, {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify(payload)
-  });
+    if (!response.ok) {
+      throw new Error("Failed to fetch");
+    }
 
-  const data = await response.json();
-  const botMessage = data.choices[0].message
+    const data = await response.json();
+    const botMessage = data.choices[0].message;
 
-  conversation.push(botMessage);
-  console.log(botMessage)
-  console.log(conversation)
+    conversation.push(botMessage);
 
-  displayMessage("Bot", botMessage.content)
+    displayMessage("Bot", botMessage.content);
+
+  } catch (error) {
+    console.log(error);
+    //TODO: Display an error to user
+  }
+
+/*   console.log(botMessage)
+  console.log(conversation) */
+
+ 
 
 }
