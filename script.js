@@ -1,4 +1,4 @@
-import { API_KEY, API_URL } from "./config.mjs"
+/* import { API_KEY, API_URL } from "./config.mjs" */
 
 const apiUrl = process.env.API_URL || API_URL;
 const apiKey = process.env.API_KEY || API_KEY;
