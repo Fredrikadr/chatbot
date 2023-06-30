@@ -7,7 +7,7 @@ let sendButton = document.querySelector("#send-btn");
 let conversation = [];
 
 const initialMessage = () => sendSystemPrompt("Introduce yourself as an AI assistant");
-/* initialMessage(); */
+initialMessage();
 
 
 sendButton.addEventListener("click", sendMessage)
@@ -45,14 +45,21 @@ function sendMessage() {
 
   conversation.push(message);
 
+  
+
   fetchBotResponse();
 }
 
 function displayMessage(message) {
   let newMessage = document.createElement("div");
   newMessage.className = message.role == "user" ? "user-message message" : "bot-message message";
+  
+  const messageContent = message.content.replace(/\n/g, '<br>');
+
+  newMessage.innerHTML = `${messageContent}`;
   chatWindow.appendChild(newMessage);
-  newMessage.innerHTML = `${message.content}`;
+
+  chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
 async function fetchBotResponse() {
