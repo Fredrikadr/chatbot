@@ -12,7 +12,7 @@ inputField.addEventListener("keydown", (e) => {
   if (e.keyCode === 13) {
     sendMessage();
   } else return;
-})
+});
 
 function sendMessage() {
   if (!inputField.value) {
@@ -27,16 +27,16 @@ function sendMessage() {
 
   inputField.value = "";
 
-  conversation.push(message)
+  conversation.push(message);
 
   fetchBotResponse();
 }
 
 function displayMessage(sender, message) {
   let newMessage = document.createElement("div");
-  newMessage.className = "message"
-  chatWindow.appendChild(newMessage)
-  newMessage.innerHTML = `${sender}: ${message}`
+  newMessage.className = sender == "You" ? "user-messager message" : "bot-message message";
+  chatWindow.appendChild(newMessage);
+  newMessage.innerHTML = `${sender}: ${message}`;
 }
 
 async function fetchBotResponse() {
