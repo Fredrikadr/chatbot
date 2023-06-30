@@ -2,17 +2,18 @@ import { apiKey, apiURL } from "./config.mjs"
 
 let inputField = document.querySelector("#message-input");
 let chatWindow = document.querySelector(".chat-window");
-let sendButton = document.querySelector("#send-btn")
+let sendButton = document.querySelector("#send-btn");
 
-let conversation = []
+let conversation = [];
 
 const initialMessage = () => sendSystemPrompt("Introduce yourself as an AI assistant");
-initialMessage();
+/* initialMessage(); */
 
 
 sendButton.addEventListener("click", sendMessage)
 inputField.addEventListener("keydown", (e) => {
-  if (e.keyCode === 13) {
+  if (e.keyCode === 13 && !e.shiftKey) {
+    e.preventDefault();
     sendMessage();
   } else return;
 });
