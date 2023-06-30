@@ -71,51 +71,40 @@ function displayMessage(message) {
 
 // Fetches response from API based on user message
 async function fetchBotResponse() {
+  const loadingSpinner = document.querySelector('.loader');
   //Show typing animation
-  const loadingSpinner = document.querySelector(".loader");
-  loadingSpinner.style.display = "block";
+  loadingSpinner.style.display = 'block';
 
   const headers = {
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${apiKey}`
+    'Content-Type': 'application/json',
   };
 
   const payload = {
-    messages: conversation,
-    model: "gpt-3.5-turbo",
-    max_tokens: 300,
-    temperature: 0
+    conversation,
   };
+
   try {
     const response = await fetch(apiUrl, {
-      method: "POST",
+      method: 'POST',
       headers: headers,
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
     });
 
     if (!response.ok) {
-      throw new Error("Failed to fetch");
+      throw new Error('Failed to fetch bot response');
     }
 
     const data = await response.json();
-    const botMessage = data.choices[0].message;
+    const botMessage = data.message;
 
     conversation.push(botMessage);
-
     displayMessage(botMessage);
-
   } catch (error) {
     console.log(error);
-    const errorContainer = document.querySelector(".error-message");
-    errorContainer.innerHTML = `There was an error getting a response. Please try again.`;
-
-
+    const errorContainer = document.querySelector('.error-message');
+    errorContainer.innerHTML = 'There was an error getting a response. Please try again.';
   } finally {
     //Hide typing animation
-    loadingSpinner.style.display = "none";
+    loadingSpinner.style.display = 'none';
   }
-
-
- 
-
 }
