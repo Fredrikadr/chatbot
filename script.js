@@ -80,7 +80,7 @@ async function fetchBotResponse() {
   const payload = {
     messages: conversation,
     model: "gpt-3.5-turbo",
-    max_tokens: 100,
+    max_tokens: 300,
     temperature: 0
   };
   try {
@@ -100,13 +100,11 @@ async function fetchBotResponse() {
     conversation.push(botMessage);
 
     displayMessage(botMessage);
-    console.log(botMessage)
-    console.log(conversation)
 
   } catch (error) {
     console.log(error);
     const errorContainer = document.querySelector(".error-message");
-    errorContainer.innerHTML = `There was an error getting a response. Please try again.`
+    errorContainer.innerHTML = `There was an error getting a response. Please try again.`;
 
 
   } finally {
