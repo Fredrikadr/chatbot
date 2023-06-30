@@ -1,4 +1,7 @@
-import { apiKey, apiURL } from "./config.mjs"
+import { API_KEY, API_URL } from "./config.mjs"
+
+const apiUrl = process.env.API_URL || API_URL;
+const apiKey = process.env.API_KEY || API_KEY;
 
 let inputField = document.querySelector("#message-input");
 let chatWindow = document.querySelector(".chat-window");
@@ -84,7 +87,7 @@ async function fetchBotResponse() {
     temperature: 0
   };
   try {
-    const response = await fetch(apiURL, {
+    const response = await fetch(apiUrl, {
       method: "POST",
       headers: headers,
       body: JSON.stringify(payload)
