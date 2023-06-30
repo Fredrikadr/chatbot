@@ -38,6 +38,7 @@ main {
   flex-direction: column;
   overflow: scroll;
   overflow-x: hidden;
+  position: relative;
 }
 
 .input-container {
@@ -79,4 +80,60 @@ main {
   background-color: var(--button-color);
   padding: 10px 25px;
   border-radius: 0 0 15px 0;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+#send-btn:active {
+  background-color: #ffd27f;
+}
+
+#send-btn:hover {
+  cursor: pointer;
+}
+
+label[for="message-input"] {
+  visibility: hidden;
+  position: absolute;
+}
+
+.error-message {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  background-color: #ff4800;
+}
+
+.loader {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: block;
+  margin: 15px auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #FFF;
+  box-shadow: -24px 0 #FFF, 24px 0 #FFF;
+  box-sizing: border-box;
+  animation: shadowPulse 2s linear infinite;
+}
+
+@keyframes shadowPulse {
+  33% {
+    background: #FFF;
+    box-shadow: -24px 0 #FF3D00, 24px 0 #FFF;
+  }
+
+  66% {
+    background: #ff4800;
+    box-shadow: -24px 0 #FFF, 24px 0 #FFF;
+  }
+
+  100% {
+    background: #ff9f87;
+    box-shadow: -24px 0 #FFF, 24px 0 #FF3D00;
+  }
 }
