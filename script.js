@@ -6,6 +6,9 @@ let sendButton = document.querySelector("#send-btn")
 
 let conversation = []
 
+const initialMessage = () => sendSystemPrompt("Introduce yourself as an AI assistant");
+initialMessage();
+
 
 sendButton.addEventListener("click", sendMessage)
 inputField.addEventListener("keydown", (e) => {
@@ -13,6 +16,18 @@ inputField.addEventListener("keydown", (e) => {
     sendMessage();
   } else return;
 });
+
+
+function sendSystemPrompt(prompt) {
+  const systemPrompt = {
+    role: "system",
+    content: prompt
+  }
+
+  conversation.push(systemPrompt);
+  fetchBotResponse();
+
+}
 
 function sendMessage() {
   if (!inputField.value) {
@@ -23,7 +38,7 @@ function sendMessage() {
     content: inputField.value
   };
 
-  displayMessage("You", message.content);
+  displayMessage(message);
 
   inputField.value = "";
 
@@ -32,11 +47,11 @@ function sendMessage() {
   fetchBotResponse();
 }
 
-function displayMessage(sender, message) {
+function displayMessage(message) {
   let newMessage = document.createElement("div");
-  newMessage.className = sender == "You" ? "user-messager message" : "bot-message message";
+  newMessage.className = message.role == "user" ? "user-message message" : "bot-message message";
   chatWindow.appendChild(newMessage);
-  newMessage.innerHTML = `${sender}: ${message}`;
+  newMessage.innerHTML = `${message.content}`;
 }
 
 async function fetchBotResponse() {
@@ -67,15 +82,15 @@ async function fetchBotResponse() {
 
     conversation.push(botMessage);
 
-    displayMessage("Bot", botMessage.content);
+    displayMessage(botMessage);
+    console.log(botMessage)
+    console.log(conversation)
 
   } catch (error) {
     console.log(error);
     //TODO: Display an error to user
   }
 
-/*   console.log(botMessage)
-  console.log(conversation) */
 
  
 
