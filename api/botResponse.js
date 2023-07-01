@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
   const payload = {
     messages: conversation,
     model: 'gpt-3.5-turbo',
-    max_tokens: 300,
+    max_tokens: 250,
     temperature: 0,
   };
 
